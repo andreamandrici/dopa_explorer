@@ -65,3 +65,7 @@ psql ${dbpar2} -f ${SQL}/pressures_road_pa.sql
 
 ## create table topography.gebco_wdpa
 psql ${dbpar2} -f ${SQL}/topography_gebco_wdpa.sql
+
+## create table topography.mhdi_wdpa
+psql ${dbpar2} -f ${SQL}/topography_mhdi_wdpa.sql
+

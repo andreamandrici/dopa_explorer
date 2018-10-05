@@ -14,7 +14,9 @@ dbpar1="host=${HOST} user=${USER} dbname=${DB}"
 dbpar2="-h ${HOST} -U ${USER} -d ${DB}"
 
 list="\
-protected_sites.wdpa_centroids
+protected_sites.dopa_geoserver_wdpa_master \
+protected_sites.dopa_drupal_wdpa_master \
+protected_sites.wdpa_centroids \
 "
 
 for l in ${list}
@@ -28,23 +30,14 @@ do
 
 	echo "creating table " ${tab}
 
-	# create_function
-	psql ${dbpar2} -f ${SQL}/${sch}/f_pop_${tab}.sql;
 	#create table
 	psql ${dbpar2} -f ${SQL}/${sch}/${tab}.sql;
+	# create_function
+	psql ${dbpar2} -f ${SQL}/${sch}/f_pop_${tab}.sql;
 	#populate table
 	echo "INSERT INTO ${sch}.${tab} SELECT * FROM ${sch}.f_pop_${tab}();" | psql ${dbpar2}
 
 	done
-
-
-# # dopa_geoserver_wdpa_master
-# ## DEPENDANT FROM administrative_units.country_codes_iso
-# psql ${dbpar2} -f ${SQL}/"protected_sites_wdpa_geoserver.sql"
-
-# # dopa_drupal_wdpa_master
-# ## DEPENDANT FROM administrative_units.country_codes_iso 
-# psql ${dbpar2} -f ${SQL}/"protected_sites_wdpa_drupal.sql"
 
 # EXPORT wdpa_centroids to CSV
 

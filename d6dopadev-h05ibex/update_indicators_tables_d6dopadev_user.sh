@@ -14,7 +14,9 @@ dbpar1="host=${HOST} user=${USER} dbname=${DB}"
 dbpar2="-h ${HOST} -U ${USER} -d ${DB}"
 
 list="\
-protected_sites.wdpa_centroids
+protected_sites.dopa_geoserver_wdpa_master \
+protected_sites.dopa_drupal_wdpa_master \
+protected_sites.wdpa_centroids \
 "
 
 for l in ${list}
@@ -43,3 +45,7 @@ do
 	echo "INSERT INTO utils.tracker (\"role\",\"schema\",\"table\",\"date\") VALUES ('${USER}','${sch}','${tab}',${dat})" | psql ${dbpar2};
 
 done
+
+# EXPORT wdpa_centroids to CSV
+
+echo "\copy protected_sites.wdpa_centroids TO ${opath}/wdpa_centroids.csv delimiter '|' CSV HEADER;" | psql ${dbpar2};
