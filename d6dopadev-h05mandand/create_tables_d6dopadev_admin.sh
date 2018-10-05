@@ -7,18 +7,17 @@ opath="outputs"
 SQL="sql"
 
 ## database parameters
-HOST="pgsql96-srv2.jrc.org"
+HOST="pgsql96-srv1.jrc.org"
 USER="h05mandand"
-DB="d6geo"
+DB="d6dopadev"
 dbpar1="host=${HOST} user=${USER} dbname=${DB}"
 dbpar2="-h ${HOST} -U ${USER} -d ${DB}"
 
-# SQL PART
+# # SQL PART
 
-## countries
-### country_atts materialized view
-psql ${dbpar2} -f ${SQL}/"country_atts.sql"
+# UTILS
+## create table utils.tracker
+psql ${dbpar2} -f ${SQL}/utils_tracker.sql
 
-## wdpa
-### wdpa materialized view
-psql ${dbpar2} -f ${SQL}/"wdpa.sql"
+## geo
+psql ${dbpar2} -f ${SQL}/"geo.sql"

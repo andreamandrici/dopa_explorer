@@ -24,10 +24,10 @@ $BODY$;
 
 -- MATERIALIZED View geo.wdpa
 
-DROP MATERIALIZED VIEW IF EXISTS geo.wdpa CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS geo.wdpa_last CASCADE;
 
-CREATE MATERIALIZED VIEW geo.wdpa AS SELECT * FROM geo.latest_wdpa() WITH DATA;
-
-CREATE INDEX wdpa_idx ON geo.wdpa USING gist(geom);
+CREATE MATERIALIZED VIEW geo.wdpa_last AS SELECT * FROM geo.latest_wdpa() WITH DATA;
+CREATE UNIQUE INDEX wdpa_last_wdpaid_idx ON geo.wdpa_last USING btree (wdpaid);
+CREATE INDEX wdpa_last_geom_idx ON geo.wdpa_last USING gist(geom);
 
 

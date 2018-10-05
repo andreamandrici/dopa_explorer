@@ -56,17 +56,18 @@ $BODY$;
 
 -- MATERIALIZED VIEW geo.country_atts
 
-DROP MATERIALIZED VIEW IF EXISTS geo.country_atts;
+DROP MATERIALIZED VIEW IF EXISTS geo.country_atts_last CASCADE;
 
-CREATE MATERIALIZED VIEW geo.country_atts
+CREATE MATERIALIZED VIEW geo.country_atts_last
 AS
  SELECT *
    FROM geo.latest_country_atts()
 WITH DATA;
-
-COMMENT ON MATERIALIZED VIEW geo.country_atts
+CREATE UNIQUE INDEX country_atts_last_un_m49_idx ON geo.country_atts_last USING btree(un_m49);
+COMMENT ON MATERIALIZED VIEW geo.country_atts_last
     IS 'integrates information from:
 https://www.iso.org/obp/ui/#search/code/
 https://unstats.un.org/unsd/methodology/m49/overview/
 http://www.acp.int/content/secretariat-acp (acp field)
 http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:European_Union_(EU) (eu28 field)';
+
